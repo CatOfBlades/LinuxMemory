@@ -109,7 +109,7 @@ void *getModuleBaseAddress(pid_t processID, const char *processName) {
     return vProcBaseAddress;
 }
 
-void ReadProcessMemory(LinuxProc_t lpProcess, void *vpBaseAddress, void *vpBuffer, size_t nSize,
+int ReadProcessMemory(LinuxProc_t lpProcess, void *vpBaseAddress, void *vpBuffer, size_t nSize,
                        size_t *lpNumberOfBytesRead) {
     struct iovec iovLocalAddressSpace[1];
     struct iovec iovRemoteAddressSpace[1];
@@ -146,10 +146,12 @@ void ReadProcessMemory(LinuxProc_t lpProcess, void *vpBaseAddress, void *vpBuffe
             default:
                 printf("ERROR: AN UNKNOWN ERROR HAS OCCURRED.\n");
         }
+        return 0;
     }
+    return 1;
 }
 
-void WriteProcessMemory(LinuxProc_t lpProcess, void *vpBaseAddress, void *vpBuffer, size_t nSize,
+int WriteProcessMemory(LinuxProc_t lpProcess, void *vpBaseAddress, void *vpBuffer, size_t nSize,
                         size_t *lpNumberOfBytesRead) {
     struct iovec iovLocalAddressSpace[1];
     struct iovec iovRemoteAddressSpace[1];
@@ -186,7 +188,9 @@ void WriteProcessMemory(LinuxProc_t lpProcess, void *vpBaseAddress, void *vpBuff
             default:
                 printf("ERROR: AN UNKNOWN ERROR HAS OCCURRED.\n");
         }
+        return 0;
     }
+    return 1;
 }
 
 LinuxProc_t fillProcessStructbyName(const char *processName) {
