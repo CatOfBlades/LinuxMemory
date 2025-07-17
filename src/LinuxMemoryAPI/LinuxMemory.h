@@ -32,7 +32,7 @@ typedef struct LinuxProc_s {
  * @param nSize : The number of bytes to be read from the specified process.
  * @param lpNumberOfBytesRead : A pointer to a variable that receives the number of bytes transferred into the specified buffer. If lpNumberOfBytesRead is NULL, the parameter is ignored.
 */
-int ReadProcessMemory(LinuxProc_t lpProcess, void *vpBaseAddress, void *vpBuffer, size_t nSize, size_t *lpNumberOfBytesRead);
+int _ReadProcessMemory(LinuxProc_t lpProcess, void *vpBaseAddress, void *vpBuffer, size_t nSize, size_t *lpNumberOfBytesRead);
 
 /**
  * @brief Writes data to an area of memory in a specified process. The entire area to be written to must be accessible or the operation fails.
@@ -43,7 +43,7 @@ int ReadProcessMemory(LinuxProc_t lpProcess, void *vpBaseAddress, void *vpBuffer
  * @param nSize : The number of bytes to be written to the specified process.
  * @param lpNumberOfBytesRead : A pointer to a variable that receives the number of bytes transferred into the specified process. This parameter is optional. If lpNumberOfBytesWritten is NULL, the parameter is ignored.
  */
-int WriteProcessMemory(LinuxProc_t lpProcess, void *vpBaseAddress, void *vpBuffer, size_t nSize,
+int _WriteProcessMemory(LinuxProc_t lpProcess, void *vpBaseAddress, void *vpBuffer, size_t nSize,
                         size_t *lpNumberOfBytesRead);
 
 /**
@@ -84,6 +84,56 @@ int attach(LinuxProc_t target);
  * @return int 
  */
 int detach(LinuxProc_t target);
+
+#ifndef HANDLE
+#define HANDLE void*
+#endif //HANDLE
+
+#ifndef WINBOOL
+#define WINBOOL uint
+#endif // WINBOOL
+
+#ifndef DWORD
+#define DWORD uint
+#endif // DWORD
+
+#ifndef SIZE_T
+#define SIZE_T size_t
+#endif // SIZE_T
+
+#ifndef PROCESS_QUERY_INFORMATION
+#define PROCESS_QUERY_INFORMATION 0
+#endif // PROCESS_QUERY_INFORMATION
+
+#ifndef PROCESS_VM_READ
+#define PROCESS_VM_READ 0
+#endif // PROCESS_VM_READ
+
+#ifndef PROCESS_VM_WRITE
+#define PROCESS_VM_WRITE 0
+#endif // PROCESS_VM_WRITE
+
+#ifndef FALSE
+#define FALSE 0
+#endif // FALSE
+
+HANDLE _OpenProcess (DWORD dwDesiredAccess, WINBOOL bInheritHandle, DWORD dwProcessId)
+{
+    LinuxProc_t ProcessHandle;
+    ProcessHandle.ProcessName = "";
+    ProcessHandle.ProcessID = (pid_t)dwProcessId;
+    ProcessHandle.ProcessBaseAddress = 0;
+
+    return ProcessHandle;
+}
+
+HANDLE OpenProcess (DWORD dwDesiredAccess, WINBOOL bInheritHandle, DWORD dwProcessId)
+{
+    HANDLE ProcessHandle = (void *)dwProcessId;
+    return ProcessHandle;
+}
+
+
 
 #ifdef __cplusplus
 }
