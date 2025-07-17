@@ -29,7 +29,7 @@ typedef struct LinuxProc_s {
  * @param nSize : The number of bytes to be read from the specified process.
  * @param lpNumberOfBytesRead : A pointer to a variable that receives the number of bytes transferred into the specified buffer. If lpNumberOfBytesRead is NULL, the parameter is ignored.
 */
-void ReadProcessMemory(LinuxProc_t lpProcess, void *vpBaseAddress, void *vpBuffer, size_t nSize, size_t *lpNumberOfBytesRead);
+int ReadProcessMemory(LinuxProc_t lpProcess, void *vpBaseAddress, void *vpBuffer, size_t nSize, size_t *lpNumberOfBytesRead);
 
 /**
  * @brief Writes data to an area of memory in a specified process. The entire area to be written to must be accessible or the operation fails.
@@ -40,7 +40,7 @@ void ReadProcessMemory(LinuxProc_t lpProcess, void *vpBaseAddress, void *vpBuffe
  * @param nSize : The number of bytes to be written to the specified process.
  * @param lpNumberOfBytesRead : A pointer to a variable that receives the number of bytes transferred into the specified process. This parameter is optional. If lpNumberOfBytesWritten is NULL, the parameter is ignored.
  */
-void WriteProcessMemory(LinuxProc_t lpProcess, void *vpBaseAddress, void *vpBuffer, size_t nSize,
+int WriteProcessMemory(LinuxProc_t lpProcess, void *vpBaseAddress, void *vpBuffer, size_t nSize,
                         size_t *lpNumberOfBytesRead);
 
 /**
