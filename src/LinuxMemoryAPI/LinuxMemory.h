@@ -19,7 +19,7 @@ typedef struct LinuxProc_s {
     pid_t ProcessID;
     void *ProcessBaseAddress;
 	bool operator==( void* b) {
-		return (this.ProcessBaseAddress == b);
+		return (this->ProcessBaseAddress == b);
 	}
 } LinuxProc_t;
 
